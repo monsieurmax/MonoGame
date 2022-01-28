@@ -60,7 +60,20 @@ namespace Microsoft.Xna.Framework.Media
         {
             FileName = fileName;
 
-#if !WINDOWS_UAP
+#if !WINDOWS_UAP && !DESKTOPGL
+            PlatformInitialize();
+#endif
+        }
+
+        internal Video(string fileName, float durationMS, int width, int height, float framesPerSecond, VideoSoundtrackType videoSoundtrackType ) :
+            this(fileName, durationMS)
+        {
+            Width = width;
+            Height = height;
+            FramesPerSecond = framesPerSecond;
+            VideoSoundtrackType = videoSoundtrackType;
+
+#if DESKTOPGL && !WINDOWS_UAP
             PlatformInitialize();
 #endif
         }
