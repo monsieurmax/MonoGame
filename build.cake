@@ -60,10 +60,10 @@ Task("Prep")
 
     // We tag the version with the build branch to make it
     // easier to spot special builds in NuGet feeds.
-    var branch = EnvironmentVariable("GIT_BRANCH") ?? string.Empty;    
+    var branch = EnvironmentVariable("GIT_BRANCH") ?? string.Empty;
     if (!branch.Contains("master"))
 	version += "-develop";
-	
+
     Console.WriteLine("Build Branch: {0}", branch);
     Console.WriteLine("Build Version: {0}", version);
 
@@ -182,12 +182,12 @@ Task("BuildTools")
     PackDotnet("Tools/MonoGame.Content.Builder.Task/MonoGame.Content.Builder.Task.csproj");
 
     PackDotnet("Tools/MonoGame.Packaging.Flatpak/MonoGame.Packaging.Flatpak.csproj");
-    
+
     var versionReg = @"<key>CFBundleShortVersionString<\/key>\s*<string>([^\s]*)<\/string>";
     var plistPath = "Tools/MonoGame.Content.Builder.Editor/Info.plist";
     var newVersion = "<key>CFBundleShortVersionString</key>\n\t<string>" + version + "</string>";
     ReplaceRegexInFiles(plistPath, versionReg, newVersion, System.Text.RegularExpressions.RegexOptions.Singleline);
-    
+
     PackDotnet("Tools/MonoGame.Content.Builder.Editor/MonoGame.Content.Builder.Editor.csproj");
 });
 
@@ -246,18 +246,20 @@ Task("PackVSMacTemplates")
 
 Task("BuildAll")
     .IsDependentOn("BuildDesktopGL")
-    .IsDependentOn("BuildWindowsDX")
-    .IsDependentOn("BuildAndroid")
-    .IsDependentOn("BuildiOS")
-    .IsDependentOn("BuildUWP")
+//     .IsDependentOn("BuildWindowsDX")
+//     .IsDependentOn("BuildAndroid")
+//     .IsDependentOn("BuildiOS")
+//     .IsDependentOn("BuildUWP")
     .IsDependentOn("BuildContentPipeline")
-    .IsDependentOn("BuildTools");
+//     .IsDependentOn("BuildTools")
+    ;
 
 Task("Pack")
     .IsDependentOn("BuildAll")
-    .IsDependentOn("PackDotNetTemplates")
-    .IsDependentOn("PackVSMacTemplates")
-    .IsDependentOn("PackVSTemplates");
+//     .IsDependentOn("PackDotNetTemplates")
+//     .IsDependentOn("PackVSMacTemplates")
+//     .IsDependentOn("PackVSTemplates")
+    ;
 
 Task("Test")
     .IsDependentOn("TestWindowsDX")
