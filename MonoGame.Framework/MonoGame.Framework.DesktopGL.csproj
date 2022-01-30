@@ -146,7 +146,6 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="MonoGame.Framework.DesktopGL.targets" PackagePath="build" />
-    <Content Include="Platform\Graphics\Effect\Resources\YUVToRGBAEffect.fx" />
   </ItemGroup>
 
   <ItemGroup>

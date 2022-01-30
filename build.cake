@@ -251,7 +251,7 @@ Task("BuildAll")
 //     .IsDependentOn("BuildiOS")
 //     .IsDependentOn("BuildUWP")
     .IsDependentOn("BuildContentPipeline")
-//     .IsDependentOn("BuildTools")
+    .IsDependentOn("BuildTools")
     ;
 
 Task("Pack")
