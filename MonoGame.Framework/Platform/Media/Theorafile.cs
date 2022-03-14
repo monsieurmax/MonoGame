@@ -69,6 +69,11 @@ public static class Theorafile
 #endif
     }
 
+    public static bool Check()
+    {
+	    return NativeLibrary != IntPtr.Zero;
+    }
+
     #endregion
 
     #region UTF8 Marshaling
