@@ -7,7 +7,7 @@
 //////////////////////////////////////////////////////////////////////
 
 var target = Argument("build-target", "Default");
-var version = Argument("build-version", EnvironmentVariable("BUILD_NUMBER") ?? "3.8.0.1");
+var version = Argument("build-version", EnvironmentVariable("BUILD_NUMBER") ?? "3.8.0.1111");
 var configuration = Argument("build-configuration", "Release");
 
 //////////////////////////////////////////////////////////////////////
@@ -251,7 +251,7 @@ Task("BuildAll")
 //     .IsDependentOn("BuildiOS")
 //     .IsDependentOn("BuildUWP")
     .IsDependentOn("BuildContentPipeline")
-    .IsDependentOn("BuildTools")
+//    .IsDependentOn("BuildTools")
     ;
 
 Task("Pack")

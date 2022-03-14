@@ -24,6 +24,7 @@ namespace Microsoft.Xna.Framework
     public partial class Game : IDisposable
     {
         public bool CUSTOM = true;
+        public string CUSTOM_VALUE = "MG 3.8 YP OGV";
 
         private GameComponentCollection _components;
         private GameServiceContainer _services;
