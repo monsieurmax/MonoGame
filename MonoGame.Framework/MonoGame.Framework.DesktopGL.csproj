@@ -7,6 +7,7 @@
     <Description>The MonoGame runtime supporting Windows, Linux and macOS using SDL2 and OpenGL.</Description>
     <PackageTags>monogame;.net core;core;.net standard;standard;desktopgl</PackageTags>
     <PackageId>MonoGame.Framework.DesktopGL</PackageId>
+    <LangVersion>7.3</LangVersion>
   </PropertyGroup>
 
   <!-- NETFX reference assemblies let us target .NET Framework on Mac/Linux without Mono -->
@@ -135,8 +136,8 @@
       <PackagePath>runtimes\osx\native</PackagePath>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="..\ThirdParty\Dependencies\SDL\MacOS\Universal\libSDL2-2.0.0.dylib">
-      <Link>libSDL2-2.0.0.dylib</Link>
+    <Content Include="..\ThirdParty\Dependencies\SDL\MacOS\Universal\libSDL2.dylib">
+      <Link>libSDL2.dylib</Link>
       <PackagePath>runtimes\osx\native</PackagePath>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
