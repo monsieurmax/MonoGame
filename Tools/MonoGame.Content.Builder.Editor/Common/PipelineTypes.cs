@@ -19,10 +19,10 @@ using MonoGame.Framework.Content.Pipeline.Builder;
 namespace MonoGame.Tools.Pipeline
 {
     public class ImporterTypeDescription
-    {        
+    {
         public string TypeName;
         public string DisplayName;
-        public string DefaultProcessor;        
+        public string DefaultProcessor;
         public IEnumerable<string> FileExtensions;
         public Type OutputType;
 
@@ -46,7 +46,7 @@ namespace MonoGame.Tools.Pipeline
             var other = obj as ImporterTypeDescription;
             if (other == null)
                 return false;
-            
+
             if (string.IsNullOrEmpty(other.TypeName) != string.IsNullOrEmpty(TypeName))
                 return false;
 
@@ -56,7 +56,7 @@ namespace MonoGame.Tools.Pipeline
 
     public class ProcessorTypeDescription
     {
-        #region Supporting Types 
+        #region Supporting Types
 
         public struct Property
         {
@@ -80,7 +80,7 @@ namespace MonoGame.Tools.Pipeline
             {
                 _properties = properties.ToArray();
             }
- 
+
             public Property this[int index]
             {
                 get
@@ -104,8 +104,8 @@ namespace MonoGame.Tools.Pipeline
                     }
 
                     throw new IndexOutOfRangeException();
-                }    
-            
+                }
+
                 set
                 {
                     for (var i = 0; i < _properties.Length; i++)
@@ -140,7 +140,7 @@ namespace MonoGame.Tools.Pipeline
         }
 
         #endregion
-        
+
         public string TypeName;
         public string DisplayName;
         public ProcessorPropertyCollection Properties;
@@ -247,7 +247,7 @@ namespace MonoGame.Tools.Pipeline
                 // Make sure we're not adding the same assembly twice.
                 path = PathHelper.Normalize(path);
                 if (!assemblyPaths.Contains(path))
-                    assemblyPaths.Add(path);                
+                    assemblyPaths.Add(path);
             }
 
             ResolveAssemblies(assemblyPaths);
@@ -269,8 +269,8 @@ namespace MonoGame.Tools.Pipeline
                     {
                         TypeName = item.Type.Name,
                         DisplayName = name,
-                        DefaultProcessor = item.Attribute.DefaultProcessor,                        
-                        FileExtensions = item.Attribute.FileExtensions,   
+                        DefaultProcessor = item.Attribute.DefaultProcessor,
+                        FileExtensions = item.Attribute.FileExtensions,
                         OutputType = outputType,
                     };
                 importerDescriptions[cur] = desc;
@@ -339,13 +339,13 @@ namespace MonoGame.Tools.Pipeline
         {
             _importers = null;
             Importers = null;
-         
+
             _processors = null;
             Processors = null;
 
             ImportersStandardValuesCollection = null;
             ProcessorsStandardValuesCollection = null;
-        }        
+        }
 
         public static TypeConverter FindConverter(Type type)
         {
@@ -360,7 +360,7 @@ namespace MonoGame.Tools.Pipeline
             if (!string.IsNullOrEmpty(name))
             {
                 name = RemapOldNames(name);
-                
+
                 foreach (var i in Importers)
                 {
                     if (i.TypeName.Equals(name))
@@ -421,11 +421,19 @@ namespace MonoGame.Tools.Pipeline
         {
             _importers = new List<ImporterInfo>();
             _processors = new List<ProcessorInfo>();
-            
+
             var assemblies = new List<Assembly>(AppDomain.CurrentDomain.GetAssemblies());
 
+            Console.WriteLine("Listing {0} System Assemblies : ", assemblies.Count);
             foreach (var asm in assemblies)
             {
+                Console.WriteLine("- Assembly : {0}", asm);
+            }
+
+            Console.WriteLine("Processing System assemblies : ");
+            foreach (var asm in assemblies)
+            {
+                Console.WriteLine("- Assembly : {0}", asm);
 #if SHIPPING
                 try
 #endif
@@ -444,28 +452,32 @@ namespace MonoGame.Tools.Pipeline
 #endif
             }
 
+            Console.WriteLine("Listing {0} Reference Assemblies : ", assemblyPaths.Count());
             foreach (var path in assemblyPaths)
             {
+                Console.WriteLine("- Assembly at path : {0}", path);
                 try
                 {
                     var a = Assembly.LoadFrom(path);
                     var types = a.GetTypes();
                     ProcessTypes(types);
                 }
-                catch 
+                catch (Exception e)
                 {
-                    //Logger.LogWarning(null, null, "Failed to load assembly '{0}': {1}", assemblyPath, e.Message);
+                    Console.WriteLine(e);
                     // The assembly failed to load... nothing
                     // we can do but ignore it.
                     continue;
-                }                
+                }
             }
         }
 
         private static void ProcessTypes(IEnumerable<Type> types)
         {
+            Console.WriteLine("Process Types :");
             foreach (var t in types)
             {
+                Console.WriteLine("- Type : {0}", t);
                 if (t.IsAbstract)
                     continue;
 
